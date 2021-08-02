@@ -19,20 +19,32 @@ class Info extends REST_Controller {
      *
      * @return Response
     */
-	public function index_get($user = 0)
-	{       
+	public function index_get()
+	{
+        $partner = $this->input->get('partner');
+        $partners = array('partnerA','partnerB'); 
+        if($partner){    
+            if(empty($partner) || !in_array($partner, $partners)){
+                $data=array('status'=>0,'data'=>[],'error'=>'invalid user');
+                $this->response($data, REST_Controller::HTTP_OK);
+                exit;
+            }else{
+                $this->db->insert("request", ['user' => $partner,'date_time'=>date('Y-m-d H:i:s')]);
+                if($this->db->affected_rows()>0){
+                    $data['status'] = 1;
+                }else{
+                    $data['status'] = 0;
+                }
+                $data['data']=array('');
+                $data['msg']='Hello '.$partner;
 
-        $this->db->insert("request", ['user' => $user,'date_time'=>date('Y-m-d')]);
-        if($this->db->affected_rows()>0){
-            $data['status'] = 1;
+             
+                $this->response($data, REST_Controller::HTTP_OK);
+            }
         }else{
-            $data['status'] = 0;
+            $data=array('status'=>0,'data'=>[],'error'=>'invalid request');
+            $this->response($data, REST_Controller::HTTP_OK);
         }
-        $data['data']=array('');
-        $data['msg']='Hello '.$user;
-
-     
-        $this->response($data, REST_Controller::HTTP_OK);
 	}
       
     /**

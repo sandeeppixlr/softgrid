@@ -29,8 +29,8 @@ class Welcome extends CI_Controller {
 	{
 		
 		$data['all_request'] = $this->request_model->get_request();
-		$data['partner1'] = $this->request_model->get_request(array('user'=>'partner1'));
-		$data['partner2'] = $this->request_model->get_request(array('user'=>'partner2'));
+		$data['partner1'] = $this->request_model->get_request(array('user'=>'partnerA'));
+		$data['partner2'] = $this->request_model->get_request(array('user'=>'partnerB'));
 		$this->load->view('dashboard',$data);
 	}
 	public function get_requests()
@@ -49,8 +49,8 @@ class Welcome extends CI_Controller {
 		$data['all_request'] = $this->request_model->get_request($where);
 		$where1 = $where;
 		$where2 = $where;
-		$where1['user'] =  'partner1';
-		$where2['user'] =  'partner2';
+		$where1['user'] =  'partnerA';
+		$where2['user'] =  'partnerB';
 		$data['partner1'] = $this->request_model->get_request($where1);
 		$data['partner2'] = $this->request_model->get_request($where2);
 		$return = array('status'=>1,'data'=>$data);

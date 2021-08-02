@@ -27,7 +27,7 @@ class Info extends REST_Controller {
             if(empty($partner) || !in_array($partner, $partners)){
                 $data=array('status'=>0,'data'=>[],'error'=>'invalid user');
                 $this->response($data, REST_Controller::HTTP_OK);
-                exit;
+                
             }else{
                 $this->db->insert("request", ['user' => $partner,'date_time'=>date('Y-m-d H:i:s')]);
                 if($this->db->affected_rows()>0){
